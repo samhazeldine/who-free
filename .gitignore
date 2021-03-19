@@ -5,3 +5,6 @@ client/.DS_Store
 backend/node_modules/
 backend/config.js
 
+client-webpack/node_modules/
+
+node_modules
