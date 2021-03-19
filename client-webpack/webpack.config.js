@@ -21,13 +21,6 @@ module.exports = {
 		filename: '[name].js',
 		chunkFilename: '[name].[id].js'
 	},
-	devServer: {
-		proxy: {
-			'/api': {
-				target:'http://localhost:3000'
-			}
-		}
-	},
 	module: {
 			rules: [
 				{
@@ -73,6 +66,9 @@ module.exports = {
 	],
 	devtool: prod ? false : 'source-map',
 	devServer: {
-		hot: true
+		hot: true,
+		proxy: {
+			'/api':'http://localhost:3000'
+		}
 	}
 };

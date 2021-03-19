@@ -1,20 +1,20 @@
 <script lang="ts">
-    import { isSameMonth, format, isWithinInterval, getTime} from "date-fns";
+    import { isSameMonth, format, isWithinInterval, formatISO} from "date-fns";
 
     export let day: Date;
     export let month: Date;
     export let clickAndDown: boolean;
     export let startDate : Date; 
     export let endDate : Date; 
-    export let selectedDates : Map<number, boolean>;
+    export let selectedDates : Map<string, boolean>;
 
     const dayFormat: string = "d";
 
     let selected: boolean = false;
 
     $: {
-    	const dateAsNumber = getTime(day);
-        if (selectedDates.has(dateAsNumber)) {
+    	const dateAsString = formatISO(day);
+        if (selectedDates.has(dateAsString)) {
             selected = true;
         }
     }

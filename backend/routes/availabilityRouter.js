@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const AvailabilityController = require('../controllers/availabilityController')
+const availabilityController = require('../controllers/availabilityController')
 
 const router = Router();
 
-router.get('/', AvailabilityController.getAvailability);
-router.post('/', AvailabilityController.createAvailability);
+router.get('/', availabilityController.getAllAvailability);
+router.post('/', availabilityController.createAvailability);
 
 module.exports = router;

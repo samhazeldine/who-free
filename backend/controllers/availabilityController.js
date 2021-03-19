@@ -1,6 +1,6 @@
 const { availability:container } = require('../config').containers;
 
-async function getAvailability (req, res) {
+async function getAllAvailability (req, res) {
     const querySpec = {
         query: "SELECT * from c"
     };
@@ -32,4 +32,4 @@ async function createAvailability (req, res) {
     
 }
 
-module.exports = {getAvailability, createAvailability};
+module.exports = {getAllAvailability, createAvailability};

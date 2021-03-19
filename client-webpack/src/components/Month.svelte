@@ -6,7 +6,7 @@
     export let clickAndDown: boolean;
     export let startDate : Date; 
     export let endDate : Date; 
-    export let selectedDates : Map<number, boolean>;
+    export let selectedDates : Map<string, boolean>;
 
 
     const dayOfWeekFormat: string = "E";
