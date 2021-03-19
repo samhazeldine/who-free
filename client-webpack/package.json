@@ -24,6 +24,7 @@
     "validate": "svelte-check"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "date-fns": "^2.19.0"
   }
 }
