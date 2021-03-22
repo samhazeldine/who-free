@@ -1,22 +1,25 @@
 <script lang="ts">
     import Calendar from './components/Calendar.svelte';
     import WelcomeScreen from './components/WelcomeScreen.svelte';
-    let eventCreated = false;
-    let startDate;
-    let endDate;
+    import router from 'page';
+    let page = 'Home';
 
-    function toggleEventCreated(event) {
-        eventCreated = true;
-    }
+    router('/', () => (page = 'Home'));
+    router('/availability', () => (page = 'Home'));
+    router('/availability/:id', () => (page = 'Availability'));
+    router.start();
+    
 
 </script>
 
 <main>
-    {#if eventCreated}
-        <Calendar/>
+    
+    {#if page === 'Home'}
+        <WelcomeScreen/>
     {:else}
-        <WelcomeScreen on:eventCreated={toggleEventCreated}/>
+        <Calendar/>
     {/if}
+    
 </main>
 
 <style>
