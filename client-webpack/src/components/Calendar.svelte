@@ -8,6 +8,8 @@
     } from "date-fns";
     import Month from "./Month.svelte";
     import axios from "axios";
+    import { fade } from 'svelte/transition';
+
 
     let startDate: Date;
     let endDate: Date;
@@ -15,10 +17,13 @@
     let selectedDates: Map<string, boolean> = new Map();
     let clickAndDown: boolean = false;
     let months: Date[] = [];
+    let isNameEntered = false;
+    let name: string;
+    const eventId = window.location.pathname.split("/")[2];
+
 
     async function getStartAndEndDate() {
-        let id = window.location.pathname.split("/")[2];
-        const data = axios.get("/api/event/" + id)
+        const data = axios.get("/api/event/" + eventId)
         .then((response) => {
                 startDate = parseISO(response.data[0].start_date);
                 endDate = parseISO(response.data[0].end_date);
@@ -46,30 +51,72 @@
 
     const promise = getStartAndEndDate();
 
+    function submitName() {
+        isNameEntered = true;
+    }
+
+    async function submitAvailability() {
+        axios.post("/api/availability", {
+            name: name,
+            dates: Array.from(selectedDates.keys()),
+            event_id: eventId
+        })
+        .then (
+            (response) => {
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
+
+    function handleDayToggled (event) {
+        if (event.detail.selected === false) {
+            selectedDates.delete(event.detail.day);
+        }
+        else {
+            selectedDates.set(event.detail.day, true);
+        }
+    }
+
 </script>
 
-{#await promise then none}
-    <div
-        id="calendar"
-        on:mouseup={setClickAndDownFalse}
-        on:mouseleave={setClickAndDownFalse}
-    >
-        {#each months as month}
-            <Month
-                {month}
-                {startDate}
-                {endDate}
-                {selectedDates}
-                bind:clickAndDown
-            />
-        {/each}
-    </div>
+{#if isNameEntered}
 
-    <button on:click={selectAll}>Select All</button>
-    
-{:catch error}
-    <p> ERROR </p>
-{/await}
+    {#await promise then none}
+        <div transition:fade>
+            <div
+                id="calendar"
+                on:mouseup={setClickAndDownFalse}
+                on:mouseleave={setClickAndDownFalse}
+            >
+                {#each months as month}
+                    <Month
+                        {month}
+                        {startDate}
+                        {endDate}
+                        {selectedDates}
+                        on:dayToggled={handleDayToggled}
+                        bind:clickAndDown
+                    />
+                {/each}
+            </div>
+
+            <button on:click={selectAll}>Select All</button>
+            <button on:click={submitAvailability}>Submit</button>
+
+        </div>
+    {/await}
+{:else} 
+    <form on:submit|preventDefault={submitName}>
+        <div>
+            <label for="name">What's your name?</label>
+            <input type="text" name="name" required bind:value="{name}">
+        </div>
+        <button type="submit">Next</button>
+    </form>
+
+{/if}
 
 <style>
     button {

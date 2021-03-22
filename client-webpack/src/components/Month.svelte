@@ -29,7 +29,7 @@
     {#each weeks as week} 
         <tr>
             {#each { length: 7 } as _, i}
-                <Day {month} {startDate} {endDate} {selectedDates} day={addDays(week, i)} bind:clickAndDown/>
+                <Day {month} {startDate} {endDate} {selectedDates} on:dayToggled day={addDays(week, i)} bind:clickAndDown/>
             {/each}
         </tr>
     {/each}

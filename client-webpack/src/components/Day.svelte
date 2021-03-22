@@ -1,48 +1,63 @@
 <script lang="ts">
-    import { isSameMonth, format, isWithinInterval, formatISO} from "date-fns";
+    import { isSameMonth, format, isWithinInterval, formatISO } from "date-fns";
+    import { createEventDispatcher } from "svelte";
 
     export let day: Date;
     export let month: Date;
     export let clickAndDown: boolean;
-    export let startDate : Date; 
-    export let endDate : Date; 
-    export let selectedDates : Map<string, boolean>;
+    export let startDate: Date;
+    export let endDate: Date;
+    export let selectedDates: Map<string, boolean>;
 
     const dayFormat: string = "d";
+    const dispatch = createEventDispatcher();
 
     let selected: boolean = false;
 
     $: {
-    	const dateAsString = formatISO(day);
+        const dateAsString = formatISO(day);
         if (selectedDates.has(dateAsString)) {
             selected = true;
         }
     }
-    
+
     function toggleSelected() {
         clickAndDown = true;
         selected = !selected;
+        dispatch("dayToggled", {
+            day: day,
+            selected: selected
+        });
     }
 
     function mouseOver() {
         if (clickAndDown) {
             selected = !selected;
+            dispatch("dayToggled", {
+                day: day,
+                selected: selected
+            });
         }
     }
+
 </script>
 
 {#if isSameMonth(day, month)}
-    {#if isWithinInterval(day, {start: startDate, end:endDate})}
-        <td class:selected on:mousedown={toggleSelected} on:mouseover={mouseOver}>
+    {#if isWithinInterval(day, { start: startDate, end: endDate })}
+        <td
+            class:selected
+            on:mousedown={toggleSelected}
+            on:mouseover={mouseOver}
+        >
             {format(day, dayFormat)}
         </td>
-    {:else} 
+    {:else}
         <td class="disabled">
             {format(day, dayFormat)}
         </td>
     {/if}
 {:else}
-    <td class="hidden"/>
+    <td class="hidden" />
 {/if}
 
 <style>
@@ -59,9 +74,8 @@
     }
 
     .disabled {
-        color:gray;
+        color: gray;
         border: 1px solid gray;
-
     }
 
     td:not(.hidden) {
