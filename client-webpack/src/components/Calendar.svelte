@@ -63,6 +63,7 @@
         })
         .then (
             (response) => {
+                window.location.href = "/results/" + eventId;
             },
             (error) => {
                 console.log(error);
@@ -85,6 +86,7 @@
 
     {#await promise then none}
         <div transition:fade>
+            <h1>Select when you're free for {eventName}</h1>
             <div
                 id="calendar"
                 on:mouseup={setClickAndDownFalse}
@@ -102,18 +104,20 @@
                 {/each}
             </div>
 
-            <button on:click={selectAll}>Select All</button>
-            <button on:click={submitAvailability}>Submit</button>
+            <button class="pure-button" on:click={selectAll}>Select All</button>
+            <button id="button__submit" class="pure-button" on:click={submitAvailability}>Submit</button>
 
         </div>
     {/await}
 {:else} 
-    <form on:submit|preventDefault={submitName}>
+    <h1>Who's Free for {eventName}?</h1>
+
+    <form class="pure-form pure-form-stacked" on:submit|preventDefault={submitName}>
         <div>
             <label for="name">What's your name?</label>
             <input type="text" name="name" required bind:value="{name}">
         </div>
-        <button type="submit">Next</button>
+        <button class="pure-button" type="submit">Next</button>
     </form>
 
 {/if}
@@ -123,5 +127,11 @@
         background-color: white;
         margin-left: 20px;
         margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #button__submit {
+        float:right;
+        margin-right: 20px;
     }
 </style>
