@@ -18,25 +18,18 @@
 
     async function getStartAndEndDate() {
         let id = window.location.pathname.split("/")[2];
-        const data = axios.get("/api/event/" + id).then(
-            (response) => {
+        const data = axios.get("/api/event/" + id)
+        .then((response) => {
                 startDate = parseISO(response.data[0].start_date);
-                console.log(startDate);
                 endDate = parseISO(response.data[0].end_date);
-                console.log(endDate);
                 eventName = response.data[0].event_name;
-                console.log(eventName)
                 months = eachMonthOfInterval({start: startDate, end: endDate});
-                console.dir(months);
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
-    }
-
-    const promise = getStartAndEndDate();
-
+        })
+        .catch((error) => {
+                //If the system cannot find the Event, just go to the homepage, no need to error
+                window.location.href = "/";
+        });
+    };
 
     function setClickAndDownFalse() {
         clickAndDown = false;
@@ -50,6 +43,8 @@
         }
         selectedDates = selectedDates; //needed for Svelte reactivity
     }
+
+    const promise = getStartAndEndDate();
 
 </script>
 
@@ -71,7 +66,7 @@
     </div>
 
     <button on:click={selectAll}>Select All</button>
-
+    
 {:catch error}
     <p> ERROR </p>
 {/await}
