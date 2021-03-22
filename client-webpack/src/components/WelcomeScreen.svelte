@@ -6,19 +6,25 @@
     let startDate:string;
     let endDate:string;
     
-    async function eventCreated() {
+    async function createEvent() {
+        createEventInDB();
         dispatch('eventCreated', {
             name: name,
             startDate: startDate,
             endDate: endDate
         });
     }
+
+    async function createEventInDB() {
+
+    }
+    
 </script>
 
 
 <h1>Who Free?</h1>
 
-<form on:submit|preventDefault="{eventCreated}">
+<form on:submit|preventDefault="{createEvent}">
     <label for="eventName">What are you trying to plan?</label>
     <input class="input" id="eventName" type="text" bind:value={name} required>
 
