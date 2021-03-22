@@ -1,8 +1,12 @@
 const { availability:container } = require('../config').containers;
 
-async function getAllAvailability (req, res) {
+async function getAllAvailabilityOnEventId (req, res) {
+    const id = req.params.event_id;
     const querySpec = {
-        query: "SELECT * from c"
+        query: "SELECT * from c WHERE c.event_id = @id",
+        parameters: [
+            {"name": "@id", "value": id}
+        ]
     };
 
     try {
@@ -32,4 +36,4 @@ async function createAvailability (req, res) {
     
 }
 
-module.exports = {getAllAvailability, createAvailability};
+module.exports = {getAllAvailabilityOnEventId, createAvailability};

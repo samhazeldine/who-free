@@ -3,7 +3,7 @@ const availabilityController = require('../controllers/availabilityController')
 
 const router = Router();
 
-router.get('/', availabilityController.getAllAvailability);
+router.get('/:event_id', availabilityController.getAllAvailabilityOnEventId);
 router.post('/', availabilityController.createAvailability);
 
 module.exports = router;

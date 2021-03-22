@@ -20,6 +20,7 @@
     let isNameEntered = false;
     let name: string;
     const eventId = window.location.pathname.split("/")[2];
+    const promise = getStartAndEndDate();
 
 
     async function getStartAndEndDate() {
@@ -31,8 +32,8 @@
                 months = eachMonthOfInterval({start: startDate, end: endDate});
         })
         .catch((error) => {
-                //If the system cannot find the Event, just go to the homepage, no need to error
-                window.location.href = "/";
+            console.log(error);                
+            window.location.href = "/";
         });
     };
 
@@ -48,8 +49,6 @@
         }
         selectedDates = selectedDates; //needed for Svelte reactivity
     }
-
-    const promise = getStartAndEndDate();
 
     function submitName() {
         isNameEntered = true;

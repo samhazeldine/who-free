@@ -2,7 +2,6 @@ const { event:container } = require('../config').containers;
 
 async function getById (req, res) {
     const id = req.params.event_id;
-    console.log("id equals: " + id);
     const querySpec = {
         query: "SELECT * from c WHERE c.id = @id",
         parameters: [

@@ -1,6 +1,7 @@
 <script lang="ts">
     import Calendar from './components/Calendar.svelte';
     import WelcomeScreen from './components/WelcomeScreen.svelte';
+    import Results from './components/Results.svelte';
     import router from 'page';
     let page = 'Home';
 
@@ -22,7 +23,7 @@
     {:else if page === 'Availability'}
         <Calendar/>
     {:else if page === 'Results'}
-        <p>Results</p>
+        <Results/>
     {/if}
     
 </main>
