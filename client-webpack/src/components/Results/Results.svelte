@@ -1,5 +1,6 @@
 <script lang="ts">
     import axios from "axios";
+    import Calendar from './ResultsCalendar.svelte';
     const eventId = window.location.pathname.split("/")[2];
     let daysWithFreeNames: Map<String, string[]> = new Map();
     const promise1 = getAvailabilities();
@@ -39,10 +40,8 @@
 
 </script>
 
-<p>gonna add results here</p>
-
 {#await promise1 then none}
-<p>hi</p>
+    <Calendar/>
 {/await}
 <style>
 </style>
