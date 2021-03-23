@@ -15,7 +15,7 @@
     let selected: boolean = false;
 
     $: {
-        const dateAsString = formatISO(day);
+        const dateAsString = formatISO(day, { representation: 'date' });
         if (selectedDates.has(dateAsString)) {
             selected = true;
         }

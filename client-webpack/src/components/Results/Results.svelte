@@ -1,10 +1,10 @@
 <script lang="ts">
     import axios from "axios";
+    import {formatISO, parseISO} from "date-fns";
     import Calendar from './ResultsCalendar.svelte';
     const eventId = window.location.pathname.split("/")[2];
-    let daysWithFreeNames: Map<String, string[]> = new Map();
-    const promise1 = getAvailabilities();
-    console.dir(daysWithFreeNames)
+    let daysWithFreeNames: Map<string, string[]> = new Map();
+    const promise = getAvailabilities();
 
     async function getAvailabilities() {
         axios.get("/api/availability/" + eventId)
@@ -36,12 +36,13 @@
                     
             });
         });
+        daysWithFreeNames = daysWithFreeNames;
     }
 
 </script>
 
-{#await promise1 then none}
-    <Calendar/>
+{#await promise then none}
+    <Calendar {daysWithFreeNames}/>
 {/await}
 <style>
 </style>

@@ -44,7 +44,7 @@
     function selectAll() {
         let date: Date = startDate;
         while (isBefore(date, addDays(endDate, 1))) {
-            selectedDates.set(formatISO(date), true);
+            selectedDates.set(formatISO(date, { representation: 'date' }), true);
             date = addDays(date, 1);
         }
         selectedDates = selectedDates; //needed for Svelte reactivity
@@ -71,11 +71,12 @@
     }
 
     function handleDayToggled (event) {
+        const dayAsString = formatISO(event.detail.day, { representation: 'date' });
         if (event.detail.selected === false) {
-            selectedDates.delete(event.detail.day);
+            selectedDates.delete(dayAsString);
         }
         else {
-            selectedDates.set(event.detail.day, true);
+            selectedDates.set(dayAsString, true);
         }
     }
 

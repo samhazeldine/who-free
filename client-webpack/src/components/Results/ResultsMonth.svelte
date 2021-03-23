@@ -5,6 +5,7 @@
     export let month: Date;
     export let startDate : Date; 
     export let endDate : Date; 
+    export let daysWithFreeNames: Map<string, string[]>;
 
 
     const dayOfWeekFormat: string = "E";
@@ -27,7 +28,7 @@
     {#each weeks as week} 
         <tr>
             {#each { length: 7 } as _, i}
-                <Day {month} {startDate} {endDate} day={addDays(week, i)}/>
+                <Day {month} {startDate} {endDate} {daysWithFreeNames} day={addDays(week, i)}/>
             {/each}
         </tr>
     {/each}
@@ -38,7 +39,7 @@
     table{
         margin:auto;
         table-layout:fixed;
-        width:300px;
+        width:800px;
     }
     @media (max-width: 500px) {
         table{

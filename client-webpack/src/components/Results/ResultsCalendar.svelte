@@ -10,6 +10,7 @@
     let endDate: Date;
     let eventName: String;
     let months: Date[] = [];
+    export let daysWithFreeNames: Map<string, string[]>;
 
     const eventId = window.location.pathname.split("/")[2];
     const promise = getStartAndEndDate();
@@ -42,6 +43,7 @@
                     {month}
                     {startDate}
                     {endDate}
+                    {daysWithFreeNames}
                 />
             {/each}
         </div>
