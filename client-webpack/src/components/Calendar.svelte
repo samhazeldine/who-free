@@ -124,13 +124,16 @@
 <style>
     button {
         background-color: white;
-        margin-left: 20px;
         margin-top: 20px;
         margin-bottom: 20px;
     }
 
     #button__submit {
         float:right;
-        margin-right: 20px;
+        margin-right: 10px;
+    }
+
+    h1 {
+        text-align: center;
     }
 </style>
