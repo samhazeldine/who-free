@@ -1,8 +1,9 @@
 <script lang="ts">
     import axios from "axios";
     const eventId = window.location.pathname.split("/")[2];
-    let availailabilities = [];
+    let daysWithFreeNames: Map<String, string[]> = new Map();
     const promise1 = getAvailabilities();
+    console.dir(daysWithFreeNames)
 
     async function getAvailabilities() {
         axios.get("/api/availability/" + eventId)
@@ -10,23 +11,38 @@
             if (Object.keys(response.data).length === 0) {
                 throw Error("No availabilities");
             }
-            else {
-                availailabilities = response.data;
-            }
+           
+            convertAvailabilitiesIntoDays(response.data);
+            
         })
         .catch((error) => {
                 console.log(error);
                 window.location.href = "/";
         });
     };
+
+    async function convertAvailabilitiesIntoDays (availabilities) {
+        availabilities.forEach(availability => {
+            availability.dates.forEach(date => {
+                if (daysWithFreeNames.has(date)) {
+                    let currentNames = daysWithFreeNames.get(date);
+                    currentNames.push(availability.name);
+                    daysWithFreeNames.set(date, currentNames);
+                }
+                else {
+                    daysWithFreeNames.set(date, [availability.name]);
+                }
+                    
+            });
+        });
+    }
+
 </script>
 
 <p>gonna add results here</p>
 
 {#await promise1 then none}
-    {#each availailabilities as availability}
-        {JSON.stringify(availability)}
-    {/each}
+<p>hi</p>
 {/await}
 <style>
 </style>
