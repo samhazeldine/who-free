@@ -57,7 +57,7 @@
         </td>
     {/if}
 {:else}
-    <td class="hidden" />
+    <td class="no-day"></td>
 {/if}
 
 <style>
@@ -69,8 +69,9 @@
         animation: bounce-in-top 1.1s both;
     }
 
-    .hidden {
+    .no-day {
         pointer-events: none;
+        border: none !important;
     }
 
     .disabled {
